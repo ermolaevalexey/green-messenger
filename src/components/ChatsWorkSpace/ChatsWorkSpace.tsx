@@ -7,8 +7,10 @@ import {ChatsList} from '../ChatsList/ChatsList.tsx';
 import {ChatHeader} from './components/ChatHeader/ChatHeader.tsx';
 import {MessagesList} from './components/MessagesList/MessagesList.tsx';
 import {MessageInput} from './components/MessageInput/MessageInput.tsx';
-import type {Message} from './ChatsWorkSpace.types.tsx';
+import type {Message, MessageStatus} from './ChatsWorkSpace.types.tsx';
 import {useMessageReceiver} from './hooks/useMessageReceiver.ts';
+import {useApi} from '../../api/provider.tsx';
+import {useMessageStatusUpdater} from '../../hooks/useMessageStatusUpdater.ts';
 
 export type ChatsWorkSpaceProps = {
   account: GetAccountSettingsResponse;
@@ -18,32 +20,46 @@ export const ChatsWorkSpace: FC<ChatsWorkSpaceProps> = ({account}) => {
   const [chatsList, updateChatsList] = useState<GetContactInfoResponse[]>([]);
   const [activeChatId, setActiveChatId] = useState<string>('');
   const [messagesByChat, setMessagesByChat] = useState<Record<string, Message[]>>({});
-  
+  const api = useApi();
+
   const addNewChat = (chat: GetContactInfoResponse) => {
     updateChatsList((currentChats) => [...currentChats, chat]);
-    
+
     setMessagesByChat((current) => ({
       ...current,
-      [chat.chatId]: []
+      [chat.chatId]: [],
     }));
   };
-  
+
   const handleMessageReceived = useCallback((message: Message) => {
     setMessagesByChat((current) => ({
       ...current,
-      [message.chatId]: [
-        ...(current[message.chatId] ?? []),
-        message,
-      ],
+      [message.chatId]: [...(current[message.chatId] ?? []), message],
     }));
   }, []);
-  
+
+  const handleMessageStatusChange = useCallback(
+    (chatId: string, messageId: string, status: MessageStatus) => {
+      setMessagesByChat((current) => ({
+        ...current,
+        [chatId]: (current[chatId] ?? []).map((message) =>
+          message.id === messageId ? {...message, status} : message,
+        ),
+      }));
+    },
+    [],
+  );
+
   useMessageReceiver({
-    onMessageReceived: handleMessageReceived
+    onMessageReceived: handleMessageReceived,
   });
-  
-  console.log(messagesByChat);
-  
+
+  useMessageStatusUpdater({
+    messagesByChat,
+    api,
+    onStatusChange: handleMessageStatusChange,
+  });
+
   return (
     <Box className={classes.container} style={{background: 'red'}}>
       <Box className={classes.chatsList}>
@@ -59,15 +75,15 @@ export const ChatsWorkSpace: FC<ChatsWorkSpaceProps> = ({account}) => {
       <Box className={classes.chatWindow}>
         <ChatHeader chat={chatsList.find((item) => item.chatId === activeChatId)} />
         <MessagesList messages={messagesByChat[activeChatId] ?? []} />
-        <MessageInput activeChatId={activeChatId} onSendMessage={(message) => {
-          setMessagesByChat((current) => ({
-            ...current,
-            [message.chatId]: [
-              ...(current[message.chatId] ?? []),
-              message,
-            ],
-          }));
-        }} />
+        <MessageInput
+          activeChatId={activeChatId}
+          onSendMessage={(message) => {
+            setMessagesByChat((current) => ({
+              ...current,
+              [message.chatId]: [...(current[message.chatId] ?? []), message],
+            }));
+          }}
+        />
       </Box>
     </Box>
   );

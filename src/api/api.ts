@@ -5,6 +5,7 @@ import {getContactInfo} from './account/getContactInfo.ts';
 import {sendMessage} from './messages/sendMessage.ts';
 import {receiveNotification} from './messages/receiveNotification.ts';
 import {deleteNotification} from './messages/deleteNotification.ts';
+import {getMessage} from './messages/getMessage.ts';
 
 export const createApi = ({idInstance, apiTokenInstance}: Credentials) => ({
   getAccountSettings: () => getAccountSettings({idInstance, apiTokenInstance}),
@@ -29,6 +30,14 @@ export const createApi = ({idInstance, apiTokenInstance}: Credentials) => ({
     body: {
       chatId,
       message
+    }
+  }),
+  getMessage: (chatId: string, idMessage: string) => getMessage({
+    idInstance,
+    apiTokenInstance,
+    body: {
+      chatId,
+      idMessage
     }
   }),
   receiveNotification: () => receiveNotification({idInstance, apiTokenInstance}),

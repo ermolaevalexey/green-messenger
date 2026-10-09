@@ -2,22 +2,21 @@ import {useApi} from '../../../api/provider.tsx';
 import type {Message} from '../ChatsWorkSpace.types.tsx';
 import {useEffect, useRef} from 'react';
 import {mapNotificationToMessage} from './mapper.ts';
+import {delay} from '../../../helpers/delay.ts';
 
 type UseMessageReceiverOptions = {
   onMessageReceived: (message: Message) => void;
 };
-const delay = (ms: number) =>
-  new Promise<void>((resolve) => setTimeout(resolve, ms));
+
 export const useMessageReceiver = ({onMessageReceived}: UseMessageReceiverOptions) => {
   const api = useApi();
   const onMessageReceivedRef = useRef(onMessageReceived);
-  
+
   useEffect(() => {
     onMessageReceivedRef.current = onMessageReceived;
   }, [onMessageReceived]);
-  
+
   useEffect(() => {
-    console.log('RECEIVER START');
     let stopped = false;
 
     const receive = async () => {
@@ -32,32 +31,26 @@ export const useMessageReceiver = ({onMessageReceived}: UseMessageReceiverOption
           if (!notification) {
             continue;
           }
-          
-          console.log('RECEIVED', {
-            receiptId: notification.receiptId,
-            idMessage: notification.body?.idMessage,
-            chatId: notification.body?.senderData?.chatId,
-          });
+
+          if (notification) {
+            console.log('[Green-API notification]', notification.body?.typeWebhook, notification);
+          }
 
           const message = mapNotificationToMessage(notification);
-          
+
           if (message) {
             onMessageReceivedRef.current(message);
           }
 
-          const delRes = await api.deleteNotification(notification.receiptId);
-          console.log('DELETED', {
-            receiptId: notification.receiptId,
-            delRes,
-          });
+          await api.deleteNotification(notification.receiptId);
           await delay(2000);
         } catch (error) {
           if (stopped) {
             break;
           }
-          
+
           console.error('RECEIVER ERROR', error);
-          
+
           await delay(2000);
         }
       }

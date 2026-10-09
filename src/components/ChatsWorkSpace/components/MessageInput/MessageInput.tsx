@@ -31,8 +31,9 @@ export const MessageInput: FC<MessageInputProps> = ({activeChatId, onSendMessage
         chatId: activeChatId,
         text: form.values.message,
         direction: 'outgoing',
-        timestamp: Date.now()
-      })
+        timestamp: Date.now(),
+        status: 'sent'
+      });
     }
   })
   

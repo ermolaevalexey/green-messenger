@@ -35,3 +35,25 @@ export type DeleteNotificationResponse = {
   result: boolean;
   reason: string;
 }
+
+export type GetMessageRequest = BaseRequest<{
+  chatId: string;
+  idMessage: string;
+}>;
+
+export type GetMessageResponse = {
+  "type": 'outgoing' | 'incoming';
+  "idMessage": string;
+  "timestamp": number;
+  "typeMessage": string;
+  "chatId": string;
+  "chatType": 'user' | 'group' | 'supergroup' | 'channel' | 'bot';
+  "textMessage": string;
+  isForwarded: boolean;
+  forwardingScore: number;
+  statusMessage: 'delivered' | 'read';
+  deletedMessageId: string;
+  editedMessageId: string;
+  isEdited: boolean;
+  isDeleted: boolean;
+}
