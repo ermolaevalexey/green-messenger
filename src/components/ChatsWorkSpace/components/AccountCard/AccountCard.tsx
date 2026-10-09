@@ -12,7 +12,7 @@ export const AccountCard: FC<AccountCardProps> = ({account}) => {
     <Flex className={classes.container} gap={12} align="center" justify="space-between">
       <Avatar src={account.avatar} radius="xl" size="lg" />
       <Box className={classes.accountData}>
-        <Title>{account.username}</Title>
+        <Title order={2}>{account.username}</Title>
         <Badge>{account.stateInstance}</Badge>
       </Box>
     </Flex>

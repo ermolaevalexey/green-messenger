@@ -1,17 +1,26 @@
-import {type FC, useState} from 'react';
-import type {CheckRecipientAccountResponse} from '../../api/account/types.ts';
+import {type FC} from 'react';
+import type {GetContactInfoResponse} from '../../api/account/types.ts';
 import {RecipientCard} from './components/RecipientCard/RecipientCard.tsx';
 import {ChatSetup} from '../ChatSetup/ChatSetup.tsx';
 
-export const ChatsList: FC = () => {
-  const [chatsList, updateChatsList] = useState<CheckRecipientAccountResponse[]>([]);
-
+type ChatsListProps = {
+  items: GetContactInfoResponse[];
+  activeChatId: string;
+  update: (recipient: GetContactInfoResponse) => void;
+  setActive: (chatId: string) => void;
+};
+export const ChatsList: FC<ChatsListProps> = ({items, activeChatId, update, setActive}) => {
   return (
     <>
-      {chatsList.map((chat) => (
-        <RecipientCard key={chat.chatId} recipient={chat} />
+      {items.map((chat) => (
+        <RecipientCard
+          key={chat.chatId}
+          recipient={chat}
+          isActive={activeChatId === chat.chatId}
+          onClick={setActive}
+        />
       ))}
-      <ChatSetup onCreateChat={(recipient) => updateChatsList([...chatsList, recipient])} />
+      <ChatSetup onCreateChat={(recipient) => update(recipient)} />
     </>
   );
 };

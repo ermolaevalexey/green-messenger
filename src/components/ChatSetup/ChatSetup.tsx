@@ -6,10 +6,11 @@ import {useApi} from '../../api/provider.tsx';
 import {isPhoneNumber} from '../../helpers/validators.ts';
 import type {FC} from 'react';
 import {useMutation} from '@tanstack/react-query';
-import type {CheckRecipientAccountResponse} from '../../api/account/types.ts';
+import type {GetContactInfoResponse} from '../../api/account/types.ts';
+import classes from './ChatSetup.module.css';
 
 type ChatSetupProps = {
-  onCreateChat: (recipient: CheckRecipientAccountResponse) => void;
+  onCreateChat: (recipient: GetContactInfoResponse) => void;
 };
 export const ChatSetup: FC<ChatSetupProps> = ({onCreateChat}) => {
   const [opened, {open, close}] = useDisclosure(false);
@@ -29,12 +30,18 @@ export const ChatSetup: FC<ChatSetupProps> = ({onCreateChat}) => {
 
   const {mutateAsync: createChat} = useMutation({
     mutationFn: async (values: {phoneNumber: string}) => {
-      return api.checkRecipientAccount(values.phoneNumber);
+      const acc = await api.checkRecipientAccount(values.phoneNumber);
+      if (acc?.data?.chatId) {
+        return api.getContactInfo(acc.data.chatId);
+      }
+      return null;
     },
     onSuccess: (response) => {
-      onCreateChat(response.data);
-      form.reset();
-      close();
+      if (response) {
+        onCreateChat(response.data as unknown as GetContactInfoResponse);
+        form.reset();
+        close();
+      }
     },
   });
 
@@ -63,15 +70,15 @@ export const ChatSetup: FC<ChatSetupProps> = ({onCreateChat}) => {
       </Modal>
 
       <ActionIcon
+        className={classes.AddChatButton}
         variant="gradient"
         size="xl"
-        radius="lg"
         aria-label="Gradient action icon"
         gradient={{from: 'blue', to: 'cyan', deg: 90}}
         onClick={open}
         title="Create new chat"
       >
-        <PlusIcon />
+        <PlusIcon /> Create new chat
       </ActionIcon>
     </>
   );

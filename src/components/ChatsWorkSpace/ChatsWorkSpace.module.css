@@ -4,6 +4,10 @@
   height: 100vh;
 }
 
+.chatsList {
+  background: var(--base);
+}
+
 .chatWindow {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;

@@ -1,30 +1,74 @@
-import type {GetAccountSettingsResponse} from '../../api/account/types.ts';
-import type {FC} from 'react';
-import {Box} from '@mantine/core';
+import type {GetAccountSettingsResponse, GetContactInfoResponse} from '../../api/account/types.ts';
+import {type FC, useCallback, useState} from 'react';
+import {Box, Divider} from '@mantine/core';
 import classes from './ChatsWorkSpace.module.css';
 import {AccountCard} from './components/AccountCard/AccountCard.tsx';
 import {ChatsList} from '../ChatsList/ChatsList.tsx';
+import {ChatHeader} from './components/ChatHeader/ChatHeader.tsx';
+import {MessagesList} from './components/MessagesList/MessagesList.tsx';
+import {MessageInput} from './components/MessageInput/MessageInput.tsx';
+import type {Message} from './ChatsWorkSpace.types.tsx';
+import {useMessageReceiver} from './hooks/useMessageReceiver.ts';
 
 export type ChatsWorkSpaceProps = {
   account: GetAccountSettingsResponse;
 };
 
 export const ChatsWorkSpace: FC<ChatsWorkSpaceProps> = ({account}) => {
+  const [chatsList, updateChatsList] = useState<GetContactInfoResponse[]>([]);
+  const [activeChatId, setActiveChatId] = useState<string>('');
+  const [messagesByChat, setMessagesByChat] = useState<Record<string, Message[]>>({});
+  
+  const addNewChat = (chat: GetContactInfoResponse) => {
+    updateChatsList((currentChats) => [...currentChats, chat]);
+    
+    setMessagesByChat((current) => ({
+      ...current,
+      [chat.chatId]: []
+    }));
+  };
+  
+  const handleMessageReceived = useCallback((message: Message) => {
+    setMessagesByChat((current) => ({
+      ...current,
+      [message.chatId]: [
+        ...(current[message.chatId] ?? []),
+        message,
+      ],
+    }));
+  }, []);
+  
+  useMessageReceiver({
+    onMessageReceived: handleMessageReceived
+  });
+  
+  console.log(messagesByChat);
+  
   return (
     <Box className={classes.container} style={{background: 'red'}}>
-      {/*<ChatList />*/}
-      <Box>
+      <Box className={classes.chatsList}>
         <AccountCard account={account} />
-        <ChatsList />
+        <Divider my="md" />
+        <ChatsList
+          items={chatsList}
+          activeChatId={activeChatId}
+          setActive={setActiveChatId}
+          update={(chat) => addNewChat(chat)}
+        />
       </Box>
-      <Box className={classes.chatWindow} style={{background: 'green'}}>
-        <Box style={{background: 'blue'}}>2</Box>
-        <Box style={{background: 'purple'}}>3</Box>
-        <Box style={{background: 'magenta'}}>4</Box>
-        {/*<ChatHeader />*/}
-        {/*<MessageList />*/}
-        {/*<MessageInput />*/}
+      <Box className={classes.chatWindow}>
+        <ChatHeader chat={chatsList.find((item) => item.chatId === activeChatId)} />
+        <MessagesList messages={messagesByChat[activeChatId] ?? []} />
+        <MessageInput activeChatId={activeChatId} onSendMessage={(message) => {
+          setMessagesByChat((current) => ({
+            ...current,
+            [message.chatId]: [
+              ...(current[message.chatId] ?? []),
+              message,
+            ],
+          }));
+        }} />
       </Box>
     </Box>
   );
-}
+};

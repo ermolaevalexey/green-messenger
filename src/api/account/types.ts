@@ -6,6 +6,10 @@ export type CheckRecipientAccountRequest = BaseRequest<{
   phoneNumber: number
 }>;
 
+export type GetContactInfoRequest = BaseRequest<{
+  chatId: string
+}>
+
 export type StateInstance = 'notAuthorized' // Инстанс не авторизован
 | 'authorized' // Инстанс авторизован
 | 'blocked' // Инстанс получил перманентную блокировку
@@ -30,3 +34,19 @@ export type CheckRecipientAccountResponse = {
   phoneNumber: number;
   fromCache: boolean;
 };
+
+export type GetContactInfoResponse = {
+  avatar: string;
+  name: string;
+  contactName: string;
+  chatId: string;
+  chatType: "user" | "group";
+  lastSeen: number;
+  phoneNumber: number;
+  phoneNumberTimestamp: number;
+  username: string;
+  isPremium: boolean;
+  isVerified: boolean;
+  isScam: boolean;
+  description: string;
+}

@@ -1,0 +1,15 @@
+.container {
+  max-width: 70%;
+  padding: 8px 12px;
+  border-radius: var(--mantine-radius-md);
+}
+
+.incoming {
+  align-self: flex-start;
+  background: var(--mantine-color-blue-5);
+}
+
+.outgoing {
+  align-self: flex-start;
+  background: var(--mantine-color-lime-5);
+}

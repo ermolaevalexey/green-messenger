@@ -1,0 +1,17 @@
+.container {
+  padding: 12px;
+  height: 100px;
+  cursor: pointer;
+}
+
+.container_active {
+  background: var(--bg);
+}
+
+.accountData {
+  flex-grow: 2;
+}
+
+.container_active .accountData {
+  color: var(--base);
+}
