@@ -1,18 +1,27 @@
-import {Avatar, Box, Flex, Text, Title} from '@mantine/core';
+import {Avatar, Box, Flex, Text} from '@mantine/core';
 import type {GetContactInfoResponse} from '../../../../api/account/types.ts';
 import type {FC} from 'react';
+import classes from './ChatHeader.module.css';
 
 type ChatHeaderProps = {
   chat?: GetContactInfoResponse;
-}
+};
+
 export const ChatHeader: FC<ChatHeaderProps> = ({chat}) => {
   return (
-    <Flex>
-      <Avatar src={chat?.avatar ?? ''} size="md" />
-      <Box>
-        <Title order={4}>{chat?.name ?? ''}</Title>
-        <Text c="dimmed">{chat?.phoneNumber ?? ''}</Text>
+    <Flex className={classes.container} align="center" gap="sm">
+      <Avatar src={chat?.avatar || null} name={chat?.name} radius="xl" size="md" />
+      <Box className={classes.info}>
+        <Text className={classes.name} fw={600} lineClamp={1}>
+          {chat?.name || 'Select chat'}
+        </Text>
+
+        {chat?.phoneNumber && (
+          <Text className={classes.phone} lineClamp={1}>
+            {chat.phoneNumber}
+          </Text>
+        )}
       </Box>
     </Flex>
   );
-}
+};

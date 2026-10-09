@@ -1,17 +1,70 @@
 .container {
-  padding: 12px;
-  height: 100px;
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  
+  width: 100%;
+  min-width: 0;
+  padding: 10px 16px !important;
+  text-align: left !important;
+  border-left: 3px solid transparent !important;
+  cursor: pointer !important;
+  
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+.container:hover {
+  background: #f1f5f9;
+}
+
+.container:focus-visible {
+  outline: 2px solid #228be6;
+  outline-offset: -2px;
 }
 
 .container_active {
-  background: var(--bg);
+  background: #e7f1ff !important;
+  border-left-color: #228be6 !important;
+}
+
+.container_active:hover {
+  background: #dbeafe !important;
 }
 
 .accountData {
-  flex-grow: 2;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
-.container_active .accountData {
-  color: var(--base);
+.name {
+  overflow: hidden;
+  color: #1f2937;
+  font-size: 14px;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.username {
+  overflow: hidden;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.container_active .name {
+  color: #1d4ed8;
+}
+
+.container_active .username {
+  color: #475569;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .container {
+    transition: none;
+  }
 }

@@ -1,0 +1,14 @@
+.link {
+  color: #1971c2;
+  text-decoration: underline;
+  text-decoration-color: rgb(25 113 194 / 40%);
+  overflow-wrap: anywhere;
+}
+
+.link:hover {
+  text-decoration-color: currentColor;
+}
+
+.outgoing .link {
+  color: #174ea6;
+}

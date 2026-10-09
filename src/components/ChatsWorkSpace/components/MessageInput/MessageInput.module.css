@@ -1,0 +1,42 @@
+.container {
+  padding: 16px 24px;
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+}
+
+.form {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+}
+
+.input :global(textarea) {
+  min-height: 42px;
+  padding: 11px 14px;
+  border-color: #e2e8f0;
+  border-radius: 12px;
+  background: #f8fafc;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.input :global(textarea:focus) {
+  border-color: #228be6;
+  background: #fff;
+}
+
+.sendButton {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 42px;
+  padding: 0;
+  border-radius: 12px;
+}

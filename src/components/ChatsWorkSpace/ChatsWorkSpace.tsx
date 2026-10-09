@@ -61,7 +61,7 @@ export const ChatsWorkSpace: FC<ChatsWorkSpaceProps> = ({account}) => {
   });
 
   return (
-    <Box className={classes.container} style={{background: 'red'}}>
+    <Box className={classes.container}>
       <Box className={classes.chatsList}>
         <AccountCard account={account} />
         <Divider my="md" />

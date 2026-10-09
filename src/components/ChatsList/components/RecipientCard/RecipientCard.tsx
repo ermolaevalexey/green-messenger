@@ -1,24 +1,32 @@
 import type {FC} from 'react';
 import type {GetContactInfoResponse} from '../../../../api/account/types.ts';
-import {Avatar, Box, Flex, Title, Text} from '@mantine/core';
+import {Avatar, Box, Text, UnstyledButton} from '@mantine/core';
 import classes from './RecipientCard.module.css';
 
 type RecipientCardProps = {
   recipient: GetContactInfoResponse;
   isActive?: boolean;
   onClick?: (chatId: string) => void;
-}
-export const RecipientCard: FC<RecipientCardProps> = ({recipient, isActive, onClick}) => {
+};
+
+export const RecipientCard: FC<RecipientCardProps> = ({recipient, isActive = false, onClick}) => {
   return (
-    <Flex
+    <UnstyledButton
       className={`${classes.container} ${isActive ? classes.container_active : ''}`}
       onClick={() => onClick?.(recipient.chatId)}
+      aria-pressed={isActive}
     >
-      <Avatar src={recipient.avatar} radius="xl" size="lg" />
+      <Avatar src={recipient.avatar} radius="xl" size="lg" name={recipient.name} />
+
       <Box className={classes.accountData}>
-        <Title order={3}>{recipient.name}</Title>
-        <Text c={isActive ? 'white' : 'dimmed'}>{recipient.username}</Text>
+        <Text className={classes.name} fw={600} lineClamp={1}>
+          {recipient.name}
+        </Text>
+
+        <Text className={classes.username} lineClamp={1}>
+          {recipient.username}
+        </Text>
       </Box>
-    </Flex>
+    </UnstyledButton>
   );
-}
+};

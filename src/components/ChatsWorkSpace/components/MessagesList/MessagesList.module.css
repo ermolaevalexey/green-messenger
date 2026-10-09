@@ -1,0 +1,21 @@
+.container {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  
+  background: #f8fafc;
+}
+
+.scrollArea {
+  height: 100%;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 12px;
+  
+  min-height: 100%;
+  padding: 20px 24px;
+}
