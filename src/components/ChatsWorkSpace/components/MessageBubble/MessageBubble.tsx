@@ -33,17 +33,17 @@ export const MessageBubble: FC<MessageBubbleProps> = ({message}) => {
             className={cx(classes.status, message.status === 'read' && classes.statusRead)}
             title={
               message.status === 'sent'
-                ? 'Sent'
+                ? 'Отправлено'
                 : message.status === 'delivered'
-                  ? 'Delivered'
-                  : 'Read'
+                  ? 'Доставлено'
+                  : 'Прочитано'
             }
             aria-label={
               message.status === 'sent'
-                ? 'Sent'
+                ? 'Отправлено'
                 : message.status === 'delivered'
-                  ? 'Delivered'
-                  : 'Read'
+                  ? 'Доставлено'
+                  : 'Прочитано'
             }
           >
             {message.status === 'sent' ? (

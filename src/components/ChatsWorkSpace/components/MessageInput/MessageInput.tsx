@@ -24,7 +24,7 @@ export const MessageInput: FC<MessageInputProps> = ({activeChatId, onSendMessage
       message: '',
     },
     validate: {
-      message: (value) => (value.trim().length > 0 ? null : 'Enter message'),
+      message: (value) => (value.trim().length > 0 ? null : 'Введите текст сообщения'),
     },
   });
 
@@ -46,9 +46,16 @@ export const MessageInput: FC<MessageInputProps> = ({activeChatId, onSendMessage
   });
 
   const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) {
+    if (
+      event.key === 'Enter' &&
+      !event.shiftKey &&
+      !event.nativeEvent.isComposing
+    ) {
       event.preventDefault();
-      form.onSubmit((values) => sendMessage(values))();
+      
+      if (activeChatId && form.values.message.trim() && !isPending) {
+        sendMessage(form.values);
+      }
     }
   };
 
@@ -57,8 +64,8 @@ export const MessageInput: FC<MessageInputProps> = ({activeChatId, onSendMessage
       <form className={classes.form} onSubmit={form.onSubmit((values) => sendMessage(values))}>
         <Textarea
           className={classes.input}
-          placeholder="Write some..."
-          aria-label="Message text"
+          placeholder="Напишите что-нибудь..."
+          aria-label="Текст сообщения"
           autosize
           minRows={1}
           maxRows={4}

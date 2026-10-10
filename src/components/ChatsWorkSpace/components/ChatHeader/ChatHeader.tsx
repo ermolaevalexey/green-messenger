@@ -13,7 +13,7 @@ export const ChatHeader: FC<ChatHeaderProps> = ({chat}) => {
       <Avatar src={chat?.avatar || null} name={chat?.name} radius="xl" size="md" />
       <Box className={classes.info}>
         <Text className={classes.name} fw={600} lineClamp={1}>
-          {chat?.name || 'Select chat'}
+          {chat?.name || 'Выберите или создайте чат'}
         </Text>
 
         {chat?.phoneNumber && (

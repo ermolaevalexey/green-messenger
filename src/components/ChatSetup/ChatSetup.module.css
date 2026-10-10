@@ -1,4 +1,47 @@
-.AddChatButton {
+.addChatButton {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   width: 100% !important;
+  height: 44px;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease;
+}
+
+.addChatButton:hover {
+  background: #dbeafe;
+  border-color: #93c5fd;
+}
+
+.modalTitle {
+  color: #1f2937;
+}
+
+.modalHeader {
+  padding-bottom: 8px;
+}
+
+.modalBody {
+  padding-top: 8px;
+}
+
+.description {
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.error {
+  color: #e03131;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .addChatButton {
+    transition: none;
+  }
 }

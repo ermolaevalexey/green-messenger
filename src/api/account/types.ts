@@ -40,7 +40,7 @@ export type GetContactInfoResponse = {
   name: string;
   contactName: string;
   chatId: string;
-  chatType: "user" | "group";
+  chatType: 'user' | 'group';
   lastSeen: number;
   phoneNumber: number;
   phoneNumberTimestamp: number;
@@ -49,4 +49,4 @@ export type GetContactInfoResponse = {
   isVerified: boolean;
   isScam: boolean;
   description: string;
-}
+};

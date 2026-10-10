@@ -13,7 +13,7 @@ export const AccountCard: FC<AccountCardProps> = ({account}) => {
       <Avatar src={account.avatar || null} name={account.username} radius="xl" size="lg" />
       <Box className={classes.accountData}>
         <Text className={classes.username} fw={600} lineClamp={1}>
-          {account.username || 'Account'}
+          {account.username || 'Мой аккаунт'}
         </Text>
 
         <Text className={classes.caption} size="xs">

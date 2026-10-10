@@ -32,10 +32,6 @@ export const useMessageReceiver = ({onMessageReceived}: UseMessageReceiverOption
             continue;
           }
 
-          if (notification) {
-            console.log('[Green-API notification]', notification.body?.typeWebhook, notification);
-          }
-
           const message = mapNotificationToMessage(notification);
 
           if (message) {
@@ -49,7 +45,7 @@ export const useMessageReceiver = ({onMessageReceived}: UseMessageReceiverOption
             break;
           }
 
-          console.error('RECEIVER ERROR', error);
+          console.error(error);
 
           await delay(2000);
         }
@@ -59,7 +55,6 @@ export const useMessageReceiver = ({onMessageReceived}: UseMessageReceiverOption
     void receive();
 
     return () => {
-      console.log('RECEIVER STOP');
       stopped = true;
     };
   }, [api]);

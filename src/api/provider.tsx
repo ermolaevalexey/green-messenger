@@ -13,6 +13,7 @@ export const ApiProvider = ({
   return <ApiContext.Provider value={api}>{children}</ApiContext.Provider>;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useApi = () => {
   const api = useContext(ApiContext);
   
