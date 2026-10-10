@@ -1,75 +1,101 @@
-# React + TypeScript + Vite
+# Green Messenger
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Веб-приложение для обмена сообщениями с интерфейсом в стиле современных мессенджеров. Реализовано на React и TypeScript с использованием Green-API для работы с сообщениями.
+В данном приложении выполнена интеграция с мессендером Telegram.
 
-Currently, two official plugins are available:
+## Возможности
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Подключение аккаунта Green-API по ID экземпляра и API-токену.
+- Просмотр списка чатов.
+- Создание чата по номеру телефона.
+- Отправка и получение сообщений.
+- Отображение времени отправки и статусов сообщений: отправлено, доставлено, прочитано.
+- Отображение информации об аккаунте и собеседниках.
+- Обновление данных через TanStack Query.
 
-## React Compiler
+## Технологический стек
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 19** — пользовательский интерфейс.
+- **TypeScript** — статическая типизация.
+- **Vite** — среда разработки и сборка.
+- **TanStack Query** — работа с серверными данными и асинхронными запросами.
+- **Axios** — HTTP-клиент.
+- **Mantine** — UI-компоненты и формы.
+- **CSS Modules** — стилизация компонентов.
+- **Phosphor Icons** — иконки.
 
-## Expanding the ESLint configuration
+## Требования
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Node.js актуальной LTS-версии.
+- npm.
+- Доступ к Green-API и авторизованный экземпляр для работы с сообщениями.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Установка и запуск
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Клонируйте репозиторий и перейдите в каталог проекта:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+git clone <repository-url>
+cd green-messenger
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Установите зависимости:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
 ```
+
+Запустите приложение в режиме разработки:
+
+```bash
+npm run dev
+```
+
+Vite выведет локальный адрес приложения в терминале.
+
+### Настройка окружения
+
+Создайте в корне проекта файл `.env` и укажите API URL:
+
+```dotenv
+VITE_API_URL=https://<apiUrl вашего инстанса из личного кабинета>
+```
+
+Укажите API URL, предоставленный в вашем инстансе в личном кабинете.
+
+После изменения `.env` перезапустите сервер разработки.
+
+## Проверка проекта
+
+Проверка TypeScript и production-сборка:
+
+```bash
+npm run build
+```
+
+Проверка кода ESLint:
+
+```bash
+npm run lint
+```
+
+Локальный просмотр production-сборки:
+
+```bash
+npm run preview
+```
+
+## Подключение Green-API
+
+1. Подготовьте экземпляр Green-API и убедитесь, что он авторизован.
+2. Запустите приложение и откройте форму подключения.
+3. Введите ID экземпляра (`idInstance`) и API-токен (`apiTokenInstance`).
+4. После успешного подключения перейдите к чатам.
+
+Работа с сообщениями зависит от доступности Green-API и настроек подключённого экземпляра.
+
+## Примечание
+
+Green-API используется для интеграции с мессенджером и проверки обмена сообщениями. Приложение предоставляет собственный пользовательский интерфейс для работы с чатами.
+
+**Безопасность:** не публикуйте API-токены и другие учётные данные в репозитории.
