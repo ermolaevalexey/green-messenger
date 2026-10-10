@@ -1,7 +1,4 @@
-import {sendMessage} from './sendMessage.ts';
-import {receiveMessage} from './receiveMessage.ts';
-
-export const messagesApi = {
-  sendMessage,
-  receiveMessage
-}
+export {sendMessage} from './sendMessage.ts';
+export {getMessage} from './getMessage.ts';
+export {receiveNotification} from './receiveNotification.ts';
+export {deleteNotification} from './deleteNotification.ts';

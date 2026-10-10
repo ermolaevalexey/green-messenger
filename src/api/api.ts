@@ -1,11 +1,6 @@
 import type {Credentials} from './types.ts';
-import {getAccountSettings} from './account/getAccountSettings.ts';
-import {checkRecipientAccount} from './account/checkRecipientAccount.ts';
-import {getContactInfo} from './account/getContactInfo.ts';
-import {sendMessage} from './messages/sendMessage.ts';
-import {receiveNotification} from './messages/receiveNotification.ts';
-import {deleteNotification} from './messages/deleteNotification.ts';
-import {getMessage} from './messages/getMessage.ts';
+import {getAccountSettings, checkRecipientAccount, getContactInfo} from './account';
+import {sendMessage, getMessage, receiveNotification, deleteNotification} from './messages';
 
 export const createApi = ({idInstance, apiTokenInstance}: Credentials) => ({
   getAccountSettings: () => getAccountSettings({idInstance, apiTokenInstance}),

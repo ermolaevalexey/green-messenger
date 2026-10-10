@@ -34,9 +34,19 @@
 }
 
 .sendButton {
+  position: relative;
   flex: 0 0 44px;
   width: 44px;
   height: 42px;
   padding: 0;
   border-radius: 12px;
+}
+
+.sendButton :global(svg) {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  flex-shrink: 0;
 }

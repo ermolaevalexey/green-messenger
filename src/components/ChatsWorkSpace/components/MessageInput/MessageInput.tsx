@@ -2,7 +2,7 @@ import {Box, Button, Textarea} from '@mantine/core';
 import {useForm} from '@mantine/form';
 import {useMutation} from '@tanstack/react-query';
 import type {FC, KeyboardEvent} from 'react';
-import {PaperPlaneRight} from '@phosphor-icons/react';
+import {PaperPlaneRightIcon} from '@phosphor-icons/react';
 import {useApi} from '../../../../api/provider.tsx';
 import type {Message} from '../../ChatsWorkSpace.types.ts';
 import classes from './MessageInput.module.css';
@@ -82,7 +82,7 @@ export const MessageInput: FC<MessageInputProps> = ({activeChatId, onSendMessage
           disabled={!activeChatId || !form.values.message.trim() || isPending}
           loading={isPending}
         >
-          <PaperPlaneRight size={20} weight="fill" />
+          <PaperPlaneRightIcon width={20} height={20} size={20} weight="fill" />
         </Button>
       </form>
     </Box>
