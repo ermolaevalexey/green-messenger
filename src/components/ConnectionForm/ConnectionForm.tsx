@@ -7,9 +7,10 @@ import classes from './ConnectionForm.module.css';
 export type ConnectionFormProps = {
   onSubmit: (values: ConnectionFormValues) => void;
   isPending?: boolean;
+  error?: string;
 };
 
-export const ConnectionForm: FC<ConnectionFormProps> = ({onSubmit, isPending = false}) => {
+export const ConnectionForm: FC<ConnectionFormProps> = ({onSubmit, isPending = false, error}) => {
   const form = useForm<ConnectionFormValues>({
     mode: 'uncontrolled',
     name: 'ConnectionForm',
@@ -51,6 +52,11 @@ export const ConnectionForm: FC<ConnectionFormProps> = ({onSubmit, isPending = f
           disabled={isPending}
           {...form.getInputProps('apiTokenInstance')}
         />
+        {error && (
+          <Text c="red" size="sm" role="alert">
+            {error}
+          </Text>
+        )}
         <Button
           className={classes.submitButton}
           type="submit"

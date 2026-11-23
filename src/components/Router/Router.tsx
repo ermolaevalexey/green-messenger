@@ -7,7 +7,7 @@ import {Text} from '@mantine/core';
 import classes from './Router.module.css';
 
 export const Router = () => {
-  const {account, credentials, onConnect} = useData();
+  const {account, credentials, onConnect, isPending, error} = useData();
 
   if (account) {
     return (
@@ -38,8 +38,7 @@ export const Router = () => {
             </Text>
 
             <h1 className={classes.heading}>
-              Ваши диалоги. {' '}
-              <span>В одном месте.</span>
+              Ваши диалоги. <span>В одном месте.</span>
             </h1>
 
             <p className={classes.subtitle}>
@@ -84,7 +83,11 @@ export const Router = () => {
               Подключите свой экземпляр, чтобы перейти к чатам.
             </p>
 
-            <ConnectionForm onSubmit={onConnect} />
+            <ConnectionForm
+              onSubmit={onConnect}
+              isPending={isPending}
+              error={error ? 'Не удалось подключиться. Проверьте ID и токен.' : ''}
+            />
 
             <Text className={classes.hint} size="xs">
               Используйте ID и токен своего экземпляра Green-API.

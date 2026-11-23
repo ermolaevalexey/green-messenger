@@ -5,17 +5,17 @@ export const mapNotificationToMessage = (
   notification: ReceiveNotificationResponse,
 ): Message | null => {
   const {body} = notification;
-  
+
   if (body.typeWebhook !== 'incomingMessageReceived') {
     return null;
   }
-  
+
   if (body.messageData.typeMessage !== 'textMessage') {
     return null;
   }
-  
+
   return {
-    id: String(notification.receiptId),
+    id: body.idMessage,
     chatId: body.senderData.chatId,
     text: body.messageData.textMessageData.textMessage,
     direction: 'incoming',

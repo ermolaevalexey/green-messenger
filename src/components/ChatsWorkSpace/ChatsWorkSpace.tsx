@@ -22,12 +22,20 @@ export const ChatsWorkSpace: FC<ChatsWorkSpaceProps> = ({account}) => {
   const [messagesByChat, setMessagesByChat] = useState<Record<string, Message[]>>({});
   const api = useApi();
 
-  const addNewChat = (chat: GetContactInfoResponse) => {
-    updateChatsList((currentChats) => [...currentChats, chat]);
+  const addNewChat = (newChat: GetContactInfoResponse) => {
+    updateChatsList((prev) => {
+      if (prev.some((chat) => chat.chatId === newChat.chatId)) {
+        return prev;
+      }
+
+      setActiveChatId(newChat.chatId);
+
+      return [...prev, newChat];
+    });
 
     setMessagesByChat((current) => ({
       ...current,
-      [chat.chatId]: [],
+      [newChat.chatId]: [],
     }));
   };
 
